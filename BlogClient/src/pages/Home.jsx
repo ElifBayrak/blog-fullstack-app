@@ -5,6 +5,7 @@ import api from "../services/api";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const [editingPost, setEditingPost] = useState(null);
 
   const fetchPosts = async () => {
     const res = await api.get("/posts");
@@ -20,6 +21,12 @@ const Home = () => {
     fetchPosts();
   };
 
+  const updatePost = async (id, data) => {
+  await api.put(`/posts/${id}`, data);
+  setEditingPost(null);
+  fetchPosts();
+  };
+
   const deletePost = async (id) => {
     await api.delete(`/posts/${id}`);
     fetchPosts();
@@ -27,10 +34,19 @@ const Home = () => {
 
   return (
     <div>
-      <PostForm onCreate={createPost} />
-      <PostList posts={posts} onDelete={deletePost} />
+     <PostForm
+  onCreate={createPost}
+  onUpdate={updatePost}
+  editingPost={editingPost}
+     />
+      <PostList
+  posts={posts}
+  onDelete={deletePost}
+  onEdit={setEditingPost}
+     />
     </div>
   );
+ 
 };
 
 export default Home;

@@ -1,11 +1,10 @@
-const PostCard = ({ post, onDelete }) => {
+const PostCard = ({ post, onDelete, onEdit }) => {
   return (
-    <div style={{ border: "1px solid #ccc", margin: "10px", padding: "10px" }}>
+    <div>
       <h3>{post.title}</h3>
       <p>{post.content}</p>
-      <small>{new Date(post.createdDate).toLocaleString()}</small>
 
-      <br />
+      <button onClick={() => onEdit(post)}>Edit</button>
       <button onClick={() => onDelete(post.id)}>Delete</button>
     </div>
   );

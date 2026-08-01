@@ -1,12 +1,15 @@
 import PostCard from "./PostCard";
 
-const PostList = ({ posts, onDelete }) => {
+const PostList = ({ posts, onDelete, onEdit }) => {
   return (
     <div>
-      <h2>Posts</h2>
-
       {posts.map((post) => (
-        <PostCard key={post.id} post={post} onDelete={onDelete} />
+        <PostCard
+          key={post.id}
+          post={post}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
       ))}
     </div>
   );

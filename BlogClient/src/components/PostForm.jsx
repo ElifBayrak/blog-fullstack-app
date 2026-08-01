@@ -1,13 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const PostForm = ({ onCreate }) => {
+const PostForm = ({ onCreate, onUpdate, editingPost }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (editingPost) {
+      setTitle(editingPost.title);
+      setContent(editingPost.content);
+    }
+  }, [editingPost]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onCreate({ title, content });
+    if (editingPost) {
+      onUpdate(editingPost.id, { title, content });
+    } 
+    else {
+      onCreate({ title, content });
+    }
 
     setTitle("");
     setContent("");
@@ -15,26 +27,24 @@ const PostForm = ({ onCreate }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Create Post</h2>
+      <h2>{editingPost ? "Edit Post" : "Create Post"}</h2>
 
       <input
-        type="text"
-        placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title"
       />
-
       <br />
-
+      <br />
       <textarea
-        placeholder="Content"
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        placeholder="Content"
       />
-
       <br />
-
-      <button type="submit">Add</button>
+      <button type="submit">
+        {editingPost ? "Update" : "Create"}
+      </button>
     </form>
   );
 };
