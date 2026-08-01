@@ -34,7 +34,8 @@ public class PostService : IPostService
         var post = new Post
         {
             Title = dto.Title,
-            Content = dto.Content
+            Content = dto.Content,
+            CreatedDate = DateTime.UtcNow
         };
 
         _context.Posts.Add(post);

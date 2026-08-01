@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using BlogApi.Data;
 using BlogApi.Services;
+using BlogApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,10 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 
 //app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseAuthorization();
 
 app.Run();
 
